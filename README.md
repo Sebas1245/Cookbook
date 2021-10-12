@@ -28,6 +28,7 @@ Social media community where people can share their recipes and see recipes from
 
 **Optional Nice-to-have Stories**
 * User can add a video when publishing a recipe. 
+* User can update a recipe
 * User can add photos or videos when updating a recipe.
 * User can add a rating to the recipe. 
 
@@ -50,6 +51,9 @@ Social media community where people can share their recipes and see recipes from
     * User can view the ingredients and steps to follow to recreate the recipe.
     * User can view other user's comments. 
     * User can add their own comments. 
+* My Recipes screen (Nice to have) 
+    * User can view a list of their own recipes. 
+    * User can update the information on each of their recipes. 
      
 
 
@@ -86,11 +90,25 @@ The models detailed below were thought out considering the use of MongoDB, these
 | author | Object | Object that contains an id attribute and a username attribute. Id attribute references the automatically granted id when a user is created, username is used for the display name of the author | 
 
 ### Networking
-- Courts Screen 
-  - (Read/GET) 
-  - (Read/GET) 
-  - (Read/GET)  
-- Courts Detail Screen
   - (Update/PUT)  
-  - (Create/POST) 
+  - (Read/GET)
+  - (Redirect to)
+- Login Screen 
+  - (Create/POST) Create a new session for the login user that expires in a certain amount of time
+- Registration Screen
+  - (Create/POST) Create a new user for the webiste with username and password. Validate that the user is unique. 
+  - (Create/POST) Create a new session for the login user that expires in a certain amount of time
+- Home screen (Requires login and therefore an existing token)
+  - (Read/GET) Get a list of all of the recipes and show name, a photo and the user who published it, and the rating (nice to have).
+  - (Redirect to) Publish new recipe screen.
+  - (Redirect to) Recipe Detail screen.
+  - (Rirect to) My Recipes screen. 
+- Publish New Recipe Screen (Requires login and therefore an existing token)
+  - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). 
+- Recipe Detail Screen
+  - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. 
+  - (Create/POST) Create a new comment with a text, and an author. 
+  - (Update/PUT) Update the rating with a number from 1 to 5, decimal. 
+- My Recipes screen - Nice to have (Requires login and therefore an existing token)
+  - (Update/PUT) Update all of the information of the recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). 
 
