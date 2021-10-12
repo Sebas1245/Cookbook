@@ -90,9 +90,6 @@ The models detailed below were thought out considering the use of MongoDB, these
 | author | Object | Object that contains an id attribute and a username attribute. Id attribute references the automatically granted id when a user is created, username is used for the display name of the author | 
 
 ### Networking
-  - (Update/PUT)  
-  - (Read/GET)
-  - (Redirect to)
 - Login Screen 
   - (Create/POST) Create a new session for the login user that expires in a certain amount of time
 - Registration Screen
