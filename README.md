@@ -102,7 +102,7 @@ The models detailed below were thought out considering the use of MongoDB, these
   - (Rirect to) My Recipes screen. 
 - Publish New Recipe Screen (Requires login and therefore an existing token)
   - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). 
-- Recipe Detail Screen
+- Recipe Detail Screen (Requires login and therefore an existing token)
   - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. 
   - (Create/POST) Create a new comment with a text, and an author. 
   - (Update/PUT) Update the rating with a number from 1 to 5, decimal. 
