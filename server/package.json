@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/Sebas1245/Cookbook#readme",
   "dependencies": {
+    "aws-sdk": "^2.1007.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
