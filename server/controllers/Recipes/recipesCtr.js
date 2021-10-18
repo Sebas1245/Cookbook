@@ -51,5 +51,31 @@ ctr.getOne = () => async (req, res, next) => {
 // DELETE Recipe 
 
 /*END Recipes CRUD*/
-// CREATE Comment for Recipe
+
+// UPDATE Recipe with a new Comment
+ctr.updateRecipeComments = () => async (req, res, next) => {
+    const author = {
+        id: req.user.id,
+        username: req.user.username
+    };
+    const { commentText, recipeId } = req.body;
+    const comment = new Comment({text: commentText, author});
+    await comment.save();
+    const updatedRecipe = await Recipe.findOneAndUpdate({_id: recipeId}, {$push: { "comments": comment } } ).exec();
+    if (!updatedRecipe) return Promise.reject(new CustomError(500, "Error saving new comment to the database.", e));
+    res.status(201).json({updatedRecipe});
+}
+
+// GET Comments for a Recipe 
+ctr.getRecipeComments = () => async (req, res, next) => {
+    const { recipeId } = req.params;
+    const comments  = (await Recipe.findById({_id: recipeId}).populate("comments").exec()).comments;
+    console.log(comments);
+    if (!comments) {
+        return Promise.reject(new CustomError(404, "Recipe not found"));
+    } else {
+        res.status(200).json({comments});
+    }
+}
+
 module.exports = ctr;
