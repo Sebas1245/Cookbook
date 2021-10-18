@@ -23,7 +23,6 @@ Social media community where people can share their recipes and see recipes from
 * User can optionally add a category to indicate the type of cuisine of the recipe.
 * User can optionally add a brief description of the dish's history.
 * User can view recipes published by other users in a global feed. 
-* User can view details of the park including rating and photos of the court.
 * User can comment on a recipe. 
 
 **Optional Nice-to-have Stories**
@@ -67,6 +66,7 @@ The models detailed below were thought out considering the use of MongoDB, these
 #### User
 | Property | Type | Description |
 | -------- | ---- | ----------- |
+| id  | MongoId | MongoDB defined id |
 | username | String | Username to identify a user, this field must be unique|
 | password | String | password for user stored as a hash value |
 | tokens | String Array | list of tokens used for session  and authorization | 
@@ -74,6 +74,9 @@ The models detailed below were thought out considering the use of MongoDB, these
 #### Recipe
 | Property | Type | Description |
 | -------- | ---- | ----------- |
+| id  | MongoId | MongoDB defined id |
+| title | String | Title for the recipe |
+| author | Object | Object that contains an id attribute and a username attribute. Id attribute references the automatically granted id when a user is created, username is used for the display name of the author | 
 | ingredients | String Array | Array of ingredients used for the recipe | 
 | steps | String Array | Array of steps required to follow for the recipe |
 | photoRef | String |  Url refeerence where the uploaded image will be stored, as it will not be stored on the database | 
@@ -86,24 +89,25 @@ The models detailed below were thought out considering the use of MongoDB, these
 #### Comment
 | Property | Type | Description |
 | -------- | ---- | ----------- |
+| id  | MongoId | MongoDB defined id |
 | text | String | Content of the comment |
 | author | Object | Object that contains an id attribute and a username attribute. Id attribute references the automatically granted id when a user is created, username is used for the display name of the author | 
 
 ### Networking
 - Login Screen 
-  - (Create/POST) Create a new session for the login user that expires in a certain amount of time
+  - (Create/POST) Create a new session for the login user that expires in a certain amount of time **Implemented**
 - Registration Screen
-  - (Create/POST) Create a new user for the webiste with username and password. Validate that the user is unique. 
-  - (Create/POST) Create a new session for the login user that expires in a certain amount of time
+  - (Create/POST) Create a new user for the webiste with username and password. Validate that the user is unique. **Implemented**
+  - (Create/POST) Create a new session for the login user that expires in a certain amount of time **Implemented**
 - Home screen (Requires login and therefore an existing token)
-  - (Read/GET) Get a list of all of the recipes and show name, a photo and the user who published it, and the rating (nice to have).
-  - (Redirect to) Publish new recipe screen.
+  - (Read/GET) Get a list of all of the recipes and show name, a photo and the user who published it, and the rating (nice to have). **Implemented pending authorization middleware and nice to have(s)**
+  - (Redirect to) Publish new recipe screen. 
   - (Redirect to) Recipe Detail screen.
   - (Rirect to) My Recipes screen. 
 - Publish New Recipe Screen (Requires login and therefore an existing token)
-  - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). 
+  - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). **Implemented pending authorization middleware and nice to have(s)**
 - Recipe Detail Screen (Requires login and therefore an existing token)
-  - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. 
+  - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. **Implemented pending authorization middleware**
   - (Create/POST) Create a new comment with a text, and an author. 
   - (Update/PUT) Update the rating with a number from 1 to 5, decimal. 
 - My Recipes screen - Nice to have (Requires login and therefore an existing token)
