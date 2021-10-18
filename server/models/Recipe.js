@@ -1,6 +1,21 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: [true, "Title is missing!"]
+    },
+    author: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: [true, "Author  id is missing!"]
+        },
+        username: {
+            type: String,
+            required: ["Author username is missing!"]
+        },
+    },
     ingredients: {
         type: [{
             type: String

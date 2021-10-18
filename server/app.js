@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 app.use('/api', require('./controllers/Authentication'))
 
 // Recipes routes 
-app.use('/api/recipes', require('./controllers/Recipes'))
+app.use('/api', require('./controllers/Recipes'))
 
 // error handling middleware 
 app.use(eHandler());
