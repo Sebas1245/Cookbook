@@ -13,7 +13,11 @@ ctr.getSecureS3Url = () => async (req, res, next) => {
 
 // CREATE Recipe 
 ctr.create = () => async (req, res, next) => {
-    const { title, author, ingredients, steps, photoRef, category, description } = req.body; 
+    const author = {
+        id: req.user.id,
+        username: req.user.username
+    };
+    const { title, ingredients, steps, photoRef, category, description } = req.body; 
     const recipe = new Recipe({title, author, ingredients, steps, photoRef, category, description});
     try {
         await recipe.save();
@@ -26,9 +30,8 @@ ctr.create = () => async (req, res, next) => {
     }
 }
 
-
 // READ ALL Recipes
-ctr.getAll= () => async (req, res, next) =>  {
+ctr.getAll = () => async (req, res, next) =>  {
     const allRecipes = await Recipe.find({}).exec();
     res.status(200).json({allRecipes});
 }

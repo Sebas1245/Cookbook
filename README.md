@@ -100,14 +100,14 @@ The models detailed below were thought out considering the use of MongoDB, these
   - (Create/POST) Create a new user for the webiste with username and password. Validate that the user is unique. **Implemented**
   - (Create/POST) Create a new session for the login user that expires in a certain amount of time **Implemented**
 - Home screen (Requires login and therefore an existing token)
-  - (Read/GET) Get a list of all of the recipes and show name, a photo and the user who published it, and the rating (nice to have). **Implemented pending authorization middleware and nice to have(s)**
+  - (Read/GET) Get a list of all of the recipes and show name, a photo and the user who published it, and the rating (nice to have). **Implemented pending nice to have(s)**
   - (Redirect to) Publish new recipe screen. 
   - (Redirect to) Recipe Detail screen.
   - (Rirect to) My Recipes screen. 
 - Publish New Recipe Screen (Requires login and therefore an existing token)
-  - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). **Implemented pending authorization middleware and nice to have(s)**
+  - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). **Implemented pending nice to have(s)**
 - Recipe Detail Screen (Requires login and therefore an existing token)
-  - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. **Implemented pending authorization middleware**
+  - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. **Implemented**
   - (Create/POST) Create a new comment with a text, and an author. 
   - (Update/PUT) Update the rating with a number from 1 to 5, decimal. 
 - My Recipes screen - Nice to have (Requires login and therefore an existing token)
