@@ -108,8 +108,9 @@ The models detailed below were thought out considering the use of MongoDB, these
   - (Create/POST) Create a new recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). **Implemented pending nice to have(s)**
 - Recipe Detail Screen (Requires login and therefore an existing token)
   - (Read/GET) Get the information for a single recipe. May not need this route if information is passed through routing. **Implemented**
-  - (Create/POST) Create a new comment with a text, and an author. 
-  - (Update/PUT) Update the rating with a number from 1 to 5, decimal. 
+  - (Read/GET) Read the comments for the recipe. **Implemented**
+  - (Update/PUT) Create a new comment with a text, and an author and add it to the recipe  **Implemented**
+  - (Update/PUT) Update the rating with a number from 1 to 5, decimal. (Nice to  have)
 - My Recipes screen - Nice to have (Requires login and therefore an existing token)
-  - (Update/PUT) Update all of the information of the recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). 
+  - (Update/PUT) Update all of the information of the recipe, always with a list of ingredients, steps and at least one photo. Optionally with a category,description, or video (nice to have). (Nice to have)
 
