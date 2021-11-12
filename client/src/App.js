@@ -1,12 +1,12 @@
 import './App.css';
 import { Routes, Route, Link } from "react-router-dom";
-import MainNavbar from './components/MainNavbar.js'
 import Homepage from './views/Homepage';
+import RegistrationLoginForm from './views/RegistrationLoginForm';
 
 function App() {
   return (
     <div className="App">
-      <Homepage loggedIn={false} />
+      <RegistrationLoginForm headerText={"Sign up"} />
     </div>
   );
 }
