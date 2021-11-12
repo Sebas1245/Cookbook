@@ -1,15 +1,20 @@
 import './App.css';
-import Button from 'react-bootstrap/Button'
+import { Routes, Route, Link } from "react-router-dom";
+import MainNavbar from './components/MainNavbar.js'
 
 function App() {
   return (
     <div className="App">
-      <p>Hello from Cookbook client!</p>
-      <div>
-        <Button variant="primary">Hello</Button>
-      </div>
+      <MainNavbar leftButtonText={"Login"} rightButtonText={"Add a recipe"} />
     </div>
   );
 }
 
 export default App;
+
+/* 
+<Routes>
+    <Route path="/" compon/>
+    <Route/>
+</Routes> 
+*/
