@@ -5,16 +5,11 @@ import Col from 'react-bootstrap/Col'
 import RecipeForm from '../components/RecipeForm'
 import ImageUpload from '../components/ImageUpload'
 import MainNavbar from '../components/MainNavbar'
-import { Link, useNavigate } from 'react-router-dom';
 
 const PublishRecipe = () => {
-    const navigate = useNavigate();
-    const handleClickCancel = () => {
-        navigate('/');
-    }
     return (
         <div>
-            <MainNavbar leftButtonText="Cancel" rightButtonText="Publish recipe" leftButtonAction={ () => handleClickCancel()} />
+            <MainNavbar />
             <Container className="mt-3">
             <Row>
                 <Col>

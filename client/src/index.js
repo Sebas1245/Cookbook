@@ -6,14 +6,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import PublishRecipe from './views/PublishRecipe';
 import RegistrationLoginForm from './views/RegistrationLoginForm';
+import RecipeDetail from './views/RecipeDetail';
 
 ReactDOM.render(
   <BrowserRouter>
-  <Routes>
+    <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/new_recipe" element={<PublishRecipe/>} />
       <Route path="/login" element={<RegistrationLoginForm headerText="Please login" />} />
       <Route path="/register" element={<RegistrationLoginForm headerText="Sign up" />} />
+      <Route path="/recipes">
+        <Route path=":recipeId" element={<RecipeDetail />} />
+      </Route>
+      <Route path="/new_recipe" element={<PublishRecipe/>} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
