@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import PublishRecipe from './views/PublishRecipe';
 import RegistrationLoginForm from './views/RegistrationLoginForm';
 import RecipeDetail from './views/RecipeDetail';
+import RequireAuth from './ProtectedRoute';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -17,7 +18,12 @@ ReactDOM.render(
       <Route path="/recipes">
         <Route path=":recipeId" element={<RecipeDetail />} />
       </Route>
-      <Route path="/new_recipe" element={<PublishRecipe/>} />
+      <Route path="/new_recipe" 
+      element={
+        <RequireAuth>
+          <PublishRecipe/>
+        </RequireAuth>
+        } />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')

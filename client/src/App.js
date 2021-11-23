@@ -1,16 +1,12 @@
-import './App.css';
+import React, {useState} from 'react'
 import Homepage from './views/Homepage';
-import RegistrationLoginForm from './views/RegistrationLoginForm';
-import ImageUpload from './components/ImageUpload';
-import RecipeForm from './components/RecipeForm';
-import PublishRecipe from './views/PublishRecipe';
-import Comments from './components/Comments';
-import RecipeDetail from './views/RecipeDetail';
+import { getToken } from './services/tokenUtilities';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(getToken())
   return (
     <div className="App">
-      <Homepage loggedIn={true} />
+      <Homepage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
     </div>
   );
 }

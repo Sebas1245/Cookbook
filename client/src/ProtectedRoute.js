@@ -1,21 +1,22 @@
-import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
-import { getToken } from './services/tokenUtilities';
+import {
+    useLocation,
+    Navigate,
+  } from "react-router-dom";
+import { getToken } from "./services/tokenUtilities";
 
+function RequireAuth({ children }) {
+    const location = useLocation();
+    const token = getToken();
 
-export default function PrivateRoute({ children, ...rest }) {
-    const loggedIn = getToken()
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                loggedIn ? (
-                    children
-                ) : (
-                    <Redirect to='/login' />
-                )
+    if (!token) {
+        // Redirect them to the /login page, but save the current location they were
+        // trying to go to when they were redirected. This allows us to send them
+        // along to that page after they login, which is a nicer user experience
+        // than dropping them off on the home page.
+        return <Navigate to="/" state={{ from: location }} />;
+    }
 
-            }
-        />
-    )
+    return children;
 }
+
+export default RequireAuth;
