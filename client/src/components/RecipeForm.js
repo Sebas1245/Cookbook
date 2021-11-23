@@ -14,8 +14,14 @@ const RecipeForm = () => {
     const [ingredients, setIngredients] = useState([]);
     const [steps, setSteps] = useState([]);
     const addIngredient = () => {
-        const newIngredientQty = document.getElementById('qty-field');
-        const newIngredientString = newIngredientQty.value === "N/A" ? ingredientField : newIngredientQty.value + ' of ' + ingredientField;
+        const newIngredientQty = document.getElementById('qty-field').value;
+        const newIngredientGrams = document.getElementById('grams-field').value;
+        let newIngredientString;
+        if (newIngredientQty=== "grams")  {
+            newIngredientString = newIngredientGrams +  ' grams of ' + ingredientField;
+        }  else {
+            newIngredientString = newIngredientQty === "N/A" ? ingredientField : newIngredientQty + ' of ' + ingredientField;
+        }
         setIngredients([...ingredients, newIngredientString]);
         setIngredientField('');
         
@@ -33,13 +39,17 @@ const RecipeForm = () => {
                 </Col>
             </Row>
             <Row className="mb-3">
-                <Col md={8}>
+                <Col md={6}>
                     <Form.Control id="ingredient-field" placeholder="New ingredient" value={ingredientField} onChange={e => setIngredientField(e.target.value)} />
+                </Col>
+                <Col>
+                    <Form.Control id="grams-field" type="number" min="0" />
                 </Col>
                 <Col>
                     <Form.Select id="qty-field" aria-label="Default select example">
                         <option>How much</option>
                         <option>N/A</option>
+                        <option>grams</option>
                         <option value="Pinch">Pinch</option>
                         <option value="1 tablespoon">1 tablespoon</option>
                         <option value="1 fluid oz.">1 fluid oz.</option>

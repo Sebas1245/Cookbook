@@ -9,7 +9,7 @@ import PublishRecipe from './views/PublishRecipe';
 function App() {
   return (
     <div className="App">
-      <PublishRecipe />
+      <Homepage loggedIn={true}/>
     </div>
   );
 }
