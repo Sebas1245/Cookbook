@@ -8,11 +8,16 @@ const MainNavbar = ({leftButtonText, rightButtonText, leftButtonAction, rightBut
     return (
         <Navbar bg="primary" variant="dark" style={{height: '10vh'}}>
             <Container fluid>
-            <Navbar.Brand href=" ">Cookbook</Navbar.Brand>
+            <Navbar.Brand href="/">Cookbook</Navbar.Brand>
                 <Nav className="ml-auto">
-                    <Button onClick={leftButtonAction} className="mx-3" variant="secondary" size="large">{leftButtonText}</Button>
-            
-                    <Button onClick={rightButtonAction} variant="info" size="large">{rightButtonText}</Button>
+                    {
+                        leftButtonText &&
+                        <Button onClick={leftButtonAction} className="mx-3" variant="secondary" size="large">{leftButtonText}</Button>
+                    }
+                    {
+                        rightButtonText && 
+                        <Button onClick={rightButtonAction} variant="info" size="large">{rightButtonText}</Button>
+                    }
                 </Nav>
             </Container>
         </Navbar>
