@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 
 const MainNavbar = ({leftButtonText, rightButtonText, leftButtonAction, rightButtonAction}) => {
     return (
-        <Navbar bg="primary" variant="dark" style={{height: '10vh'}}>
+        <Navbar bg="primary" variant="dark" style={{height: '12%'}}>
             <Container fluid>
             <Navbar.Brand href="/">Cookbook</Navbar.Brand>
                 <Nav className="ml-auto">
