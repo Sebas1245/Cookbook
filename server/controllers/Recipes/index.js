@@ -6,9 +6,9 @@ const   express = require('express'),
 
 router.get('/recipes/s3url', asyncHandler(isLoggedIn), asyncHandler(recipesCtr.getSecureS3Url()));
 
-router.get('/recipes', asyncHandler(isLoggedIn), asyncHandler(ctr.getAll()));
+router.get('/recipes', asyncHandler(ctr.getAll()));
 
-router.get('/recipes/:recipeId', asyncHandler(isLoggedIn), asyncHandler(ctr.getOne()));
+router.get('/recipes/:recipeId', asyncHandler(ctr.getOne()));
 
 router.post('/recipes', asyncHandler(isLoggedIn), asyncHandler(ctr.create()));
 
