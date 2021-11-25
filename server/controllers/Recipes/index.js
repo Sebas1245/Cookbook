@@ -14,6 +14,6 @@ router.post('/recipes', asyncHandler(isLoggedIn), asyncHandler(ctr.create()));
 
 router.put('/recipes/comments', asyncHandler(isLoggedIn), asyncHandler(ctr.updateRecipeComments()));
 
-router.get('/recipes/comments/:recipeId', asyncHandler(isLoggedIn), asyncHandler(ctr.getRecipeComments()));
+router.get('/recipes/comments/:recipeId', asyncHandler(ctr.getRecipeComments()));
 
 module.exports = router;

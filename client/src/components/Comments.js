@@ -6,13 +6,10 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import ListGroup from 'react-bootstrap/ListGroup'
+import {getToken} from '../services/tokenUtilities';
 
-export default function Comments() {
-    const dummyComments = [
-        "Nice!",
-        "This was very hard",
-        "So tasty!"
-    ]
+export default function Comments({comments}) {
+    const loggedIn = getToken();
     return (
         <Container fluid className="text-justify mt-3">
             <Row>
@@ -20,19 +17,30 @@ export default function Comments() {
                     <h4>Comments</h4>
                 </Col>
             </Row>
-            <ListGroup>
-                <ListGroup.Item>
-                    <InputGroup className="m-0">
-                        <FormControl
-                        placeholder="Say something nice"
-                        />
-                        <Button variant="secondary" id="button-addon2">
-                        Add comment
-                        </Button>
-                    </InputGroup>
-                </ListGroup.Item>
-                {dummyComments.map((comment, i) => <ListGroup.Item key={`comment-${i}`}>{comment}</ListGroup.Item>)}
-            </ListGroup>
+            <Row className="mb-3">
+                <Col>
+                    <ListGroup variant="flush">
+                        {
+                            loggedIn &&
+                            <ListGroup.Item>
+                                <InputGroup className="m-0">
+                                    <FormControl
+                                    placeholder="Say something nice"
+                                    />
+                                    <Button variant="secondary" id="button-addon2">
+                                    Add comment
+                                    </Button>
+                                </InputGroup>
+                            </ListGroup.Item>
+                        }
+                        {comments.map((comment, i) => 
+                            <ListGroup.Item key={`comment-${i}`}>
+                                <p>{comment.text}</p>  
+                                <p className="text-end"><strong>{comment.author.username}</strong></p>
+                            </ListGroup.Item>)}
+                    </ListGroup>
+                </Col>
+            </Row>
         </Container>
     )
 }

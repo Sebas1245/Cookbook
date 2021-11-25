@@ -4,30 +4,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Image from 'react-bootstrap/Image'
-import { useParams } from "react-router-dom";
 
 
-export default function RecipeInfo() {
-    const params = useParams();
-    const dummySteps = [
-        'Step 1',
-        'Step 2',
-        'Step 3',
-        'Step 4',
-        'Step 5',
-        'Step 6',
-    ]
-    const dummyIngedients = [
-        'Ingredient 1',
-        'Ingredient 2',
-        'Ingredient 3',
-
-    ]
+export default function RecipeInfo({title, imageSrc, ingredients, steps}) {
     return (
         <Container className="mt-3" fluid>
             <Row>
                 <Col>
-                    <h3>Title of recipe {params.recipeId}</h3>
+                    <h3>{title}</h3>
                 </Col>
             </Row>
             <Row>
@@ -37,15 +21,15 @@ export default function RecipeInfo() {
             </Row>
             <Row>
                 <Col>
-                    <ListGroup>
-                    {dummyIngedients.map((ingredient, i) => <ListGroup.Item key={`ingredient-${i}`}>{ingredient}</ListGroup.Item>)}
+                    <ListGroup variant="flush">
+                    {ingredients.map((ingredient, i) => <ListGroup.Item key={`ingredient-${i}`}>{ingredient}</ListGroup.Item>)}
                     </ListGroup>
                 </Col>
-                <Col>
+                <Col className="text-center">
                     <Image
-                    style={{maxHeight: "100%", maxWidth: "100%"}} 
+                    style={{height: '65vh'}} 
                     id="recipe-image" 
-                    src="https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?format=pjpg&auto=webp&fit=crop&quality=76&width=1232" 
+                    src={imageSrc} 
                     />
                 </Col>
             <Row>
@@ -56,8 +40,8 @@ export default function RecipeInfo() {
             </Row>
             <Row className="mt-2">
                 <Col xs={12}>
-                    <ListGroup>
-                        {dummySteps.map((step, i) => <ListGroup.Item key={`step-${i}`}>{step}</ListGroup.Item>)}
+                    <ListGroup variant="flush" as="ol" numbered>
+                        {steps.map((step, i) => <ListGroup.Item as="li" key={`step-${i}`}>{step}</ListGroup.Item>)}
                     </ListGroup>
                 </Col>
             </Row>
