@@ -4,25 +4,29 @@ import Row from 'react-bootstrap/Row'
 import Image from 'react-bootstrap/Image'
 import Form from 'react-bootstrap/Form'
 
-const ImageUpload = () => {
+const ImageUpload = ({setFile}) => {
     const handleFileChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            const img = document.getElementById('recipe-image'); 
+            const img = document.getElementById('image-picker'); 
+            console.log(img.src)
             img.onload = () => {
                 URL.revokeObjectURL(img.src);  // no longer needed, free memory
             }
             img.src = URL.createObjectURL(e.target.files[0]); // set src to blob url
+            console.log(e.target.files[0])
+            console.log(img.src)
+            setFile(e.target.files[0]);
         }
     }
 
     return (
-        <Container style={{justifyContent: 'end'}}> 
+        <Container> 
             <Row>
-                <Image
-                style={{maxHeight: "100%", maxWidth: "100%"}} 
-                id="recipe-image" 
+                <Image 
+                style={{height: '35vh', objectFit: 'contain'}}
+                id="image-picker" 
                 src="https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?format=pjpg&auto=webp&fit=crop&quality=76&width=1232" 
-                thumbnail/>
+                />
             </Row>
             <Row>
                 <Form.Group controlId="formFile" className="mb-3">

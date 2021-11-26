@@ -6,16 +6,33 @@ import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup'
 
 
-const RecipeForm = () => {
+const RecipeForm = ({setParentTitle, setParentIngredients, setParentSteps, setParentCategory, setParentDescription}) => {
+    const [title, setTitleField] = useState("");
     const [ingredientField, setIngredientField] = useState("");
     const [stepField, setStepField] = useState("");
-    const [categoryField, setCategoryField] = useState("");
-    const [descriptionField, setDescriptionField] = useState("");
+    const [category, setCategoryField] = useState("");
+    const [description, setDescriptionField] = useState("");
     const [ingredients, setIngredients] = useState([]);
     const [steps, setSteps] = useState([]);
     const addIngredient = () => {
         const newIngredientQty = document.getElementById('qty-field').value;
         const newIngredientGrams = document.getElementById('grams-field').value;
+        if (newIngredientQty === "How much") {
+            alert("Select a quantity")
+            return;
+        }
+        if (newIngredientQty === "grams" && newIngredientGrams === 0) {
+            alert('Set a quantity greater than 0 for grams');
+            return;
+        }
+        if (newIngredientGrams > 0 && newIngredientQty !== "grams") {
+            alert("Only use the number field when using grams as a unit");
+            return;
+        }
+        if (newIngredientQty === 0 || ingredientField === "") {
+            alert("You must add more information to the ingredient!")
+            return;
+        }
         let newIngredientString;
         if (newIngredientQty=== "grams")  {
             newIngredientString = newIngredientGrams +  ' grams of ' + ingredientField;
@@ -24,18 +41,34 @@ const RecipeForm = () => {
         }
         setIngredients([...ingredients, newIngredientString]);
         setIngredientField('');
-        
+        setParentIngredients(ingredients);
     }
 
     const addStep = () => {
-        setSteps([...steps, stepField]);
-        setStepField('');
+        if (stepField !== ''){
+            setSteps([...steps, stepField]);
+            setStepField('');
+            setParentSteps(steps);
+        }
+    }
+    const handleTitleChange = (e) => {
+        setTitleField(e.target.value);
+        setParentTitle(title);
+    }
+    const handleCategoryChange = (e) => {
+        setCategoryField(e.target.value);
+        setParentCategory(category);
+    }
+    const handleDescriptionChange = (e) => {
+        setDescriptionField(e.target.value);
+        setParentDescription(description);
     }
     return (
-        <Form>
+        <div>
             <Row className="mb-3">
                 <Col>
-                    <Form.Control placeholder="Recipe title" />
+                    <Form.Control placeholder="Recipe title" value={title}
+                    onChange={handleTitleChange} />
                 </Col>
             </Row>
             <Row className="mb-3">
@@ -72,7 +105,7 @@ const RecipeForm = () => {
             <Row className="mb-3">
                 <Col>
                     <ListGroup>
-                        {ingredients.map((ingredient, i) => <ListGroup.Item key={`ingredient-${i}`}>{ingredient}</ListGroup.Item>)}
+                        {ingredients.map((ingredient, i) => <ListGroup.Item key={`ingredient-${i}`}>{ingredient} </ListGroup.Item>)}
                     </ListGroup>
                 </Col>
             </Row>
@@ -89,21 +122,25 @@ const RecipeForm = () => {
             <Row className="mb-3">
                 <Col>
                     <ListGroup as="ol" numbered>
-                        {steps.map((step, i) => <ListGroup.Item as="li" key={`ingredient-${i}`}>{step}</ListGroup.Item>)}
+                        {steps.map((step, i) => <ListGroup.Item as="li" key={`step-${i}`}>{step}</ListGroup.Item>)}
                     </ListGroup>
                 </Col>
             </Row>
             <Row className="mb-3">
                 <Col>
-                    <Form.Control id="category-field" placeholder="Assign a category" value={categoryField} onChange={e => setCategoryField(e.target.value)} />
+                    <Form.Control id="category-field" 
+                    placeholder="Assign a category" value={category} 
+                    onChange={handleCategoryChange} />
                 </Col>
             </Row>
             <Row className="mb-3">
                 <Col>
-                    <Form.Control as="textarea" rows="5" id="category-field" placeholder="Tell everyone a little more about the dish and it's history!" value={descriptionField} onChange={e => setDescriptionField(e.target.value)} />
+                    <Form.Control as="textarea" rows="5" id="category-field" 
+                    placeholder="Tell everyone a little more about the dish and it's history!" 
+                    value={description} onChange={handleDescriptionChange} />
                 </Col>
             </Row>
-        </Form>
+        </div>
     )
 }
 

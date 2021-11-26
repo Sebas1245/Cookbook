@@ -58,23 +58,29 @@ export const getCommentsForRecipe = async (recipeId) => {
     }
 }
 
-export const postRecipe = async (title, ingredients, steps, photo, category, description) => {
+export const postRecipe = async ({title, ingredients, steps, image, category, description}) => {
     try {
         // get secure url from our server 
         // translate later to AJAX GET request
-        const { url } = await fetch(baseRequestUrl + "/recipes/s3url").then(res => res.json()); 
-        console.log(url)
-        // post image directly to s3 bucket
-        // translate later to AJAX PUT request
-        // add try catch statement for validation
-        await fetch(url, {
-            method: "PUT",
-            header: {
-                "Content-Type": "multipart/form-data"
-            },
-            body: photo
-        });
-        const photoRef = url.split('?')[0];
+        let photoRef;
+        if (image === undefined)  {
+            photoRef = "https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?format=pjpg&auto=webp&fit=crop&quality=76&width=1232"
+        } else {
+            const { url } = await fetch(baseRequestUrl + "/recipes/s3url").then(res => res.json()); 
+            console.log(url)
+    
+            // post image directly to s3 bucket
+            // translate later to AJAX PUT request
+            // add try catch statement for validation
+            await fetch(url, {
+                method: "PUT",
+                header: {
+                    "Content-Type": "multipart/form-data"
+                },
+                body: image
+            });
+            photoRef = url.split('?')[0];
+        }
         const requestData = { title, ingredients, steps, photoRef, category, description};
         // post request to server to upload image along with rest of recipe data
         const {data} = await axios.post(baseRequestUrl + '/recipes', requestData, {
