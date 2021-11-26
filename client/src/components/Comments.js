@@ -32,7 +32,6 @@ export default function Comments({recipeId}) {
         }        
     }
     const noCommentText = loggedIn ? "Be the first to comment!" : "There are no comments for this recipe"
-    console.log(comments)
     const commentListItems = comments.length === 0 ? 
                             <p><em>{noCommentText}</em></p> 
                             : comments.map(

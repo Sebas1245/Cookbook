@@ -9,7 +9,6 @@ const Homepage = ({loggedIn, setLoggedIn}) => {
     // const [recipe, setRecipe] = useState([]);
     const navigate = useNavigate();
     const redirectTo = (path) => {
-        console.log('redirecting to ', path);
         navigate(path);
     }
     const logout = () => {

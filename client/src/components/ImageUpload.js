@@ -8,13 +8,10 @@ const ImageUpload = ({setFile}) => {
     const handleFileChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const img = document.getElementById('image-picker'); 
-            console.log(img.src)
             img.onload = () => {
                 URL.revokeObjectURL(img.src);  // no longer needed, free memory
             }
             img.src = URL.createObjectURL(e.target.files[0]); // set src to blob url
-            console.log(e.target.files[0])
-            console.log(img.src)
             setFile(e.target.files[0]);
         }
     }

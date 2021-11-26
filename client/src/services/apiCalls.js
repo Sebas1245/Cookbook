@@ -40,7 +40,6 @@ export const getOneRecipe = async (recipeId) => {
     try {
         const path = '/recipes/'+ recipeId;
         const {data} = await axios.get(baseRequestUrl + path); 
-        console.log(data);
         return Promise.resolve(data.recipe);
     } catch (error) {
         return Promise.reject(error.response.data.message);
@@ -51,7 +50,6 @@ export const getCommentsForRecipe = async (recipeId) => {
     try {
         const path = '/recipes/comments/' + recipeId;
         const {data} = await axios.get(baseRequestUrl + path); 
-        console.log(data);
         return Promise.resolve(data.comments);
     } catch (error) {
         return Promise.reject(error.response.data.message);
@@ -87,7 +85,6 @@ export const postRecipe = async ({title, ingredients, steps, image, category, de
         }
         const requestData = { title, ingredients, steps, photoRef, category, description};
         // post request to server to upload image along with rest of recipe data
-        console.log(getToken())
         const response = await axios.post(baseRequestUrl + '/recipes', requestData, {
             headers: {
                 Authorization: `Bearer: ${getToken()}`
@@ -100,8 +97,8 @@ export const postRecipe = async ({title, ingredients, steps, image, category, de
 }
 
 export const postComment = async (requestData) => {
+    alert(JSON.stringify(requestData));
     try {
-        console.log(requestData)
         const {data} = await axios.put(baseRequestUrl + '/recipes/comments', requestData, {
             headers: {
                 Authorization: `Bearer: ${getToken()}`
