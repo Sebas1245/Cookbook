@@ -60,6 +60,8 @@ export const postRecipe = async ({title, ingredients, steps, image, category, de
     try {
         // get secure url from our server 
         // translate later to AJAX GET request
+        console.log("Recipe info to send to backend: ")
+        console.log(title, ingredients, steps, image, category, description)
         let photoRef;
         if (image === undefined)  {
             photoRef = "https://cookbook-files.s3.amazonaws.com/default-photo.jpeg"
@@ -97,7 +99,6 @@ export const postRecipe = async ({title, ingredients, steps, image, category, de
 }
 
 export const postComment = async (requestData) => {
-    alert(JSON.stringify(requestData));
     try {
         const {data} = await axios.put(baseRequestUrl + '/recipes/comments', requestData, {
             headers: {

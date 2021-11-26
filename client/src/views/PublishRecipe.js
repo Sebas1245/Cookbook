@@ -9,6 +9,7 @@ import {postRecipe} from '../services/apiCalls'
 import {useNavigate} from 'react-router-dom'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Form from 'react-bootstrap/Form';
+import CloseButton from 'react-bootstrap/CloseButton'
 
 
 const PublishRecipe = () => {
@@ -22,32 +23,10 @@ const PublishRecipe = () => {
     const [steps, setSteps] = useState([]);
     const [image, setImage] = useState(undefined);
     const addIngredient = () => {
-        const newIngredientQty = document.getElementById('qty-field').value;
-        const newIngredientGrams = document.getElementById('grams-field').value;
-        if (newIngredientQty === "How much") {
-            alert("Select a quantity")
-            return;
+        if (ingredientField !== '') {
+            setIngredients([...ingredients, ingredientField]);
+            setIngredientField('');
         }
-        if (newIngredientQty === "grams" && newIngredientGrams === 0) {
-            alert('Set a quantity greater than 0 for grams');
-            return;
-        }
-        if (newIngredientGrams > 0 && newIngredientQty !== "grams") {
-            alert("Only use the number field when using grams as a unit");
-            return;
-        }
-        if (newIngredientQty === 0 || ingredientField === "") {
-            alert("You must add more information to the ingredient!")
-            return;
-        }
-        let newIngredientString;
-        if (newIngredientQty=== "grams")  {
-            newIngredientString = newIngredientGrams +  ' grams of ' + ingredientField;
-        }  else {
-            newIngredientString = newIngredientQty === "N/A" ? ingredientField : newIngredientQty + ' of ' + ingredientField;
-        }
-        setIngredients([...ingredients, newIngredientString]);
-        setIngredientField('');
     }
 
     const addStep = () => {
@@ -68,6 +47,8 @@ const PublishRecipe = () => {
     const createRecipe = async (e) => {
         e.preventDefault();
         try {
+            console.log("Recipe info on component")
+            console.log(title, ingredients, steps, image, category, description);
             const successfulCreatedRecipe = await postRecipe({title, ingredients, steps, image, category, description});
             if (successfulCreatedRecipe) {
                 navigate('/');
@@ -75,6 +56,12 @@ const PublishRecipe = () => {
         } catch (error) {
             alert(error);
         }
+    }
+    const removeIngredient = (e) => {
+        setIngredients(ingredients.filter((ingredient) => ingredient !== e.target.id))
+    }
+    const removeStep = (e) => {
+        setSteps(steps.filter((step) => step !== e.target.id))
     }
     return (
         <div>
@@ -96,30 +83,9 @@ const PublishRecipe = () => {
                                 </Col>
                             </Row>
                             <Row className="mb-3">
-                                <Col md={6}>
-                                    <Form.Control id="ingredient-field" placeholder="New ingredient" value={ingredientField} onChange={e => setIngredientField(e.target.value)} />
+                                <Col md={8}>
+                                    <Form.Control id="ingredient-field" placeholder="New ingredient with its measurement" value={ingredientField} onChange={e => setIngredientField(e.target.value)} />
                                 </Col>
-                                <Col>
-                                    <Form.Control id="grams-field" type="number" min="0" />
-                                </Col>
-                                <Col>
-                                    <Form.Select id="qty-field" aria-label="Default select example">
-                                        <option>How much</option>
-                                        <option>N/A</option>
-                                        <option>grams</option>
-                                        <option value="Pinch">Pinch</option>
-                                        <option value="1 tablespoon">1 tablespoon</option>
-                                        <option value="1 fluid oz.">1 fluid oz.</option>
-                                        <option value="1/4 cup">1/4 cup</option>
-                                        <option value="1/3 cup">1/3 cup</option>
-                                        <option value="3/4 cup">3/4 cup</option>
-                                        <option value="1 cup">1 cup</option>
-                                        <option value="2 cups">2 cups</option>
-                                        <option value="1 quart or 32 fluid oz.">1 quart or 32 fluid oz.</option>
-                                        <option value="4 quarts or a gallon">4 quarts or a gallon</option>
-                                    </Form.Select>
-                                </Col>
-                                
                             </Row>
                             <Row className="mb-3">
                                 <Col>
@@ -129,7 +95,14 @@ const PublishRecipe = () => {
                             <Row className="mb-3">
                                 <Col>
                                     <ListGroup>
-                                        {ingredients.map((ingredient, i) => <ListGroup.Item key={`ingredient-${i}`}>{ingredient} </ListGroup.Item>)}
+                                        {ingredients.map((ingredient, i) => 
+                                        <ListGroup.Item key={`ingredient-${i}`}>
+                                            <Row>
+                                                <Col xs={10}>{ingredient}</Col>
+                                                <Col><CloseButton id={`${ingredient}`} onClick={removeIngredient} /></Col>
+                                            </Row>
+                                        </ListGroup.Item>)
+                                        }
                                     </ListGroup>
                                 </Col>
                             </Row>
@@ -145,8 +118,14 @@ const PublishRecipe = () => {
                             </Row>
                             <Row className="mb-3">
                                 <Col>
-                                    <ListGroup as="ol" numbered>
-                                        {steps.map((step, i) => <ListGroup.Item as="li" key={`step-${i}`}>{step}</ListGroup.Item>)}
+                                    <ListGroup>
+                                        {steps.map((step, i) => 
+                                        <ListGroup.Item key={`step-${i}`}>
+                                            <Row>
+                                                <Col xs={10}>{i + 1}. {step}</Col>
+                                                <Col><CloseButton id={`${step}`} onClick={removeStep} /></Col>
+                                            </Row>
+                                        </ListGroup.Item>)}
                                     </ListGroup>
                                 </Col>
                             </Row>
