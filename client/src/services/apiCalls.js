@@ -90,12 +90,13 @@ export const postRecipe = async (title, ingredients, steps, photo, category, des
 
 export const postComment = async (requestData) => {
     try {
+        console.log(requestData)
         const {data} = await axios.put(baseRequestUrl + '/recipes/comments', requestData, {
             headers: {
                 Authorization: `Bearer: ${getToken()}`
             }
         });
-        return Promise.resolve(data.status === 201);
+        return Promise.resolve(data.comments);
     } catch (error) {
         return Promise.reject(error.response.data.message);
     }

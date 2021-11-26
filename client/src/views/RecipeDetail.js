@@ -3,7 +3,7 @@ import MainNavbar from '../components/MainNavbar'
 import Comments from '../components/Comments'
 import RecipeInfo from '../components/RecipeInfo'
 import { useParams } from 'react-router-dom'
-import { getCommentsForRecipe, getOneRecipe } from '../services/apiCalls'
+import {  getOneRecipe } from '../services/apiCalls'
 
 
 export default function RecipeDetail() {
@@ -15,16 +15,12 @@ export default function RecipeDetail() {
         ingredients: [],
         steps: []
     })
-    const [comments, setComments] = useState([]);
     useEffect( () => {
-        const fetchRecipeAndComments = async () => {
-            console.log(params)
+        const fetchRecipe = async () => {
             const recipe = await getOneRecipe(params.recipeId);
             setRecipe(recipe);
-            const comments = await getCommentsForRecipe(params.recipeId);
-            setComments(comments);
         }
-        fetchRecipeAndComments()
+        fetchRecipe()
     }, [params])
     return (
         <div>
@@ -33,10 +29,7 @@ export default function RecipeDetail() {
             imageSrc={recipe.photoRef} 
             ingredients={recipe.ingredients} 
             steps={recipe.steps} />
-            {
-                comments.length !== 0 &&
-                <Comments comments={comments} />
-            }
+            <Comments recipeId={params.recipeId} />
         </div>
     )
 }
