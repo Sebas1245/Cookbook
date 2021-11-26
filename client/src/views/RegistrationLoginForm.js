@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Image from 'react-bootstrap/Image'
 import {useNavigate} from 'react-router-dom'
+import { login, signup } from '../services/apiCalls';
 
 const RegistrationLoginForm = ({headerText}) => {
     const navigate = useNavigate();
@@ -12,63 +13,31 @@ const RegistrationLoginForm = ({headerText}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const handleLogin = async (e) => {
         e.preventDefault()
-        if (!username || !password) 
-            alert('You need a username and a password to log in!')
-        else {
-            try {
-                console.log(username, password, confirmPassword)
-                const data = await fetch('http://localhost:5000/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username,
-                        password,
-                    })
-                })
-                if (data.ok) {
-                    sessionStorage.setItem('token', data.token);
-                    sessionStorage.setItem('user', data.user);
-                    navigate('/', {state: 'LoggedIn'});
-                }
-            } catch (e) {
-                console.log(e);
-                alert(e);
+        try {
+            console.log(username, password, confirmPassword)
+            const successfulLogin = await login({username, password});
+            if (successfulLogin) {
+                navigate('/', {state: 'LoggedIn'});
             }
+        } catch (e) {
+            console.log(e);
+            alert(e);
         }
+        
     }
     const handleSignup = async (e) => {
         e.preventDefault()
-        console.log(username, password, confirmPassword)
-        if (!username || !password) {
-            alert('You need a username and a password to sign up!')
-        } else if (password !== confirmPassword) {
-            alert('Passwords do not match!')
-        } else {
-            try {
-                console.log(username, password, confirmPassword)
-                const data = await fetch('http://localhost:5000/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username,
-                        password,
-                        confirmPassword
-                    })
-                })
-                console.log(data);
-                alert(JSON.stringify(data));
-                if (data.ok) {
-                    navigate('/login', {state: 'Signed up'});
-                }
-            } catch (e) {
-                console.log(e);
-                alert(e);
+        try {
+            console.log(username, password, confirmPassword)
+            const successfullSignup = await signup({username, password, confirmPassword});
+            if (successfullSignup) {
+                navigate('/', {state: 'LoggedIn'});
             }
+        } catch (e) {
+            console.log(e);
+            alert(e);
         }
+
     }
     return (
         <div className="py-5" style={{display: 'flex', alignItems: 'center', height: '100vh'}}>
