@@ -17,14 +17,14 @@ export default function RecipeDetail() {
     })
     const [comments, setComments] = useState([]);
     useEffect( () => {
-        const fetchRecipe = async () => {
+        const fetchRecipeAndComments = async () => {
             console.log(params)
             const recipe = await getOneRecipe(params.recipeId);
             setRecipe(recipe);
             const comments = await getCommentsForRecipe(params.recipeId);
             setComments(comments);
         }
-        fetchRecipe()
+        fetchRecipeAndComments()
     }, [params])
     return (
         <div>
@@ -33,7 +33,10 @@ export default function RecipeDetail() {
             imageSrc={recipe.photoRef} 
             ingredients={recipe.ingredients} 
             steps={recipe.steps} />
-            <Comments comments={comments} />
+            {
+                comments.length !== 0 &&
+                <Comments comments={comments} />
+            }
         </div>
     )
 }

@@ -26,56 +26,77 @@ export const signup = async (signupData) => {
 }
 
 export const getAllRecipes = async () => {
-    const path = '/recipes'
-    const response = await fetch(baseRequestUrl + path).then(res => res.json());
-    console.log(response)
-    return response.allRecipes;
+    try {
+        const path = '/recipes'
+        const {data} = await axios.get(baseRequestUrl + path); 
+        return Promise.resolve(data.allRecipes);
+    } catch (error) {
+        return Promise.reject(error.response.data.message);
+    }
+
 }
 
 export const getOneRecipe = async (recipeId) => {
-    const path = '/recipes/'+ recipeId;
-    const response = await fetch(baseRequestUrl + path).then(res => res.json()); 
-    console.log(response);
-    return response.recipe;
+    try {
+        const path = '/recipes/'+ recipeId;
+        const {data} = await axios.get(baseRequestUrl + path); 
+        console.log(data);
+        return Promise.resolve(data.recipe);
+    } catch (error) {
+        return Promise.reject(error.response.data.message);
+    }
 }
 
 export const getCommentsForRecipe = async (recipeId) => {
-    const path = '/recipes/comments/' + recipeId;
-    const response = await fetch(baseRequestUrl + path).then(res => res.json());
-    console.log(response)
-    return response.comments;
+    try {
+        const path = '/recipes/comments/' + recipeId;
+        const {data} = await axios.get(baseRequestUrl + path); 
+        console.log(data);
+        return Promise.resolve(data.comments);
+    } catch (error) {
+        return Promise.reject(error.response.data.message);
+    }
 }
 
 export const postRecipe = async (title, ingredients, steps, photo, category, description) => {
-    // get secure url from our server 
-    // translate later to AJAX GET request
-    const { url } = await fetch(baseRequestUrl + "/recipes/s3url").then(res => res.json()); 
-    console.log(url)
-    // post image directly to s3 bucket
-    // translate later to AJAX PUT request
-    // add try catch statement for validation
-    await fetch(url, {
-        method: "PUT",
-        header: {
-            "Content-Type": "multipart/form-data"
-        },
-        body: photo
-    });
-    const photoRef = url.split('?')[0];
-    // post request to server to upload image along with rest of recipe data
-    const response = await fetch(baseRequestUrl + '/recipes', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`
-        },
-        body: JSON.stringify({
-            title,
-            ingredients,
-            steps,
-            photoRef,
-            category,
-            description
+    try {
+        // get secure url from our server 
+        // translate later to AJAX GET request
+        const { url } = await fetch(baseRequestUrl + "/recipes/s3url").then(res => res.json()); 
+        console.log(url)
+        // post image directly to s3 bucket
+        // translate later to AJAX PUT request
+        // add try catch statement for validation
+        await fetch(url, {
+            method: "PUT",
+            header: {
+                "Content-Type": "multipart/form-data"
+            },
+            body: photo
+        });
+        const photoRef = url.split('?')[0];
+        const requestData = { title, ingredients, steps, photoRef, category, description};
+        // post request to server to upload image along with rest of recipe data
+        const {data} = await axios.post(baseRequestUrl + '/recipes', requestData, {
+            headers: {
+                Authorization: `Bearer: ${getToken()}`
+            }
         })
-    })
+        return Promise.resolve(data.status === 201);
+    } catch (error) {
+        return Promise.reject(error.response.data.message);
+    }
+}
+
+export const postComment = async (requestData) => {
+    try {
+        const {data} = await axios.put(baseRequestUrl + '/recipes/comments', requestData, {
+            headers: {
+                Authorization: `Bearer: ${getToken()}`
+            }
+        });
+        return Promise.resolve(data.status === 201);
+    } catch (error) {
+        return Promise.reject(error.response.data.message);
+    }
 }
