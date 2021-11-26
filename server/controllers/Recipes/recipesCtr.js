@@ -18,6 +18,11 @@ ctr.create = () => async (req, res, next) => {
         username: req.user.username
     };
     const { title, ingredients, steps, photoRef, category, description } = req.body; 
+    if (ingredients.length === 0) 
+        return Promise.reject(new CustomError(409, "You must add ingredients to the recipe"));
+        if (steps.length === 0) 
+        return Promise.reject(new CustomError(409, "You must add steps to the recipe"));
+    console.log(title, ingredients, steps, photoRef, category, description)
     const recipe = new Recipe({title, author, ingredients, steps, photoRef, category, description});
     await recipe.save();
     res.status(201).json({
