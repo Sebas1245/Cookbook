@@ -49,7 +49,9 @@ const recipeSchema = new mongoose.Schema({
     },
     videoRef: {
         type: String,
-    },
+    }, 
+}, {
+    timestamps: true
 })
 
 recipeSchema.path('rating').validate((value) => {

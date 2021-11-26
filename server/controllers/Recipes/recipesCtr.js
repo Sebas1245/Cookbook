@@ -28,7 +28,7 @@ ctr.create = () => async (req, res, next) => {
 
 // READ ALL Recipes
 ctr.getAll = () => async (req, res, next) =>  {
-    const allRecipes = await Recipe.find({}).exec();
+    const allRecipes = await Recipe.find({}).sort({createdAt: -1}).exec();
     res.status(200).json({allRecipes});
 }
 // READ ONE Recipe
@@ -60,6 +60,7 @@ ctr.updateRecipeComments = () => async (req, res, next) => {
     const updatedRecipe = await Recipe.findOneAndUpdate({_id: recipeId}, {$push: { "comments": comment } } ).exec();
     if (!updatedRecipe) return Promise.reject(new CustomError(500, "Error saving new comment to the database.", e));
     const comments  = (await Recipe.findById({_id: recipeId}).populate("comments").exec()).comments;
+    comments.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     res.status(201).json({comments});
 }
 
@@ -67,11 +68,9 @@ ctr.updateRecipeComments = () => async (req, res, next) => {
 ctr.getRecipeComments = () => async (req, res, next) => {
     const { recipeId } = req.params;
     const comments  = (await Recipe.findById({_id: recipeId}).populate("comments").exec()).comments;
-    if (!comments) {
-        return Promise.reject(new CustomError(404, "Recipe not found"));
-    } else {
-        res.status(200).json({comments});
-    }
+    console.log(comments);
+    comments.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    res.status(200).json({comments});
 }
 
 module.exports = ctr;
