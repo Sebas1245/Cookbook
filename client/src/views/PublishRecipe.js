@@ -6,9 +6,12 @@ import RecipeForm from '../components/RecipeForm'
 import ImageUpload from '../components/ImageUpload'
 import MainNavbar from '../components/MainNavbar'
 import Button from 'react-bootstrap/Button'
+import {postRecipe} from '../services/apiCalls'
+import {useNavigate} from 'react-router-dom'
 
 
 const PublishRecipe = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         ingredients: [],
@@ -20,6 +23,14 @@ const PublishRecipe = () => {
     const createRecipe = async (e) => {
         e.preventDefault();
         console.log(formData);
+        try {
+            const successfulCreatedRecipe = await postRecipe(formData);
+            if (successfulCreatedRecipe) {
+                navigate('/');
+            }
+        } catch (error) {
+            alert(error);
+        }
     }
     return (
         <div>

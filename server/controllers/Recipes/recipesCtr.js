@@ -19,15 +19,11 @@ ctr.create = () => async (req, res, next) => {
     };
     const { title, ingredients, steps, photoRef, category, description } = req.body; 
     const recipe = new Recipe({title, author, ingredients, steps, photoRef, category, description});
-    try {
-        await recipe.save();
-        res.status(201).json({
-            message: 'Recipe created successfully',
-            recipe
-        });
-    } catch (e) {
-        return Promise.reject(new CustomError(500, "Error saving new recipe to the database.", e))
-    }
+    await recipe.save();
+    res.status(201).json({
+        message: 'Recipe created successfully',
+        recipe
+    });
 }
 
 // READ ALL Recipes
