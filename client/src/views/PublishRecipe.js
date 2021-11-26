@@ -47,8 +47,6 @@ const PublishRecipe = () => {
     const createRecipe = async (e) => {
         e.preventDefault();
         try {
-            console.log("Recipe info on component")
-            console.log(title, ingredients, steps, image, category, description);
             const successfulCreatedRecipe = await postRecipe({title, ingredients, steps, image, category, description});
             if (successfulCreatedRecipe) {
                 navigate('/');
