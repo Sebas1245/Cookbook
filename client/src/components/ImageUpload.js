@@ -25,7 +25,7 @@ const ImageUpload = ({setFile}) => {
                 <Image 
                 style={{height: '35vh', objectFit: 'contain'}}
                 id="image-picker" 
-                src="https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltc1f5d681043ec5e0/5de0ba2ef1b4be78076c2a6a/Hot_meal_header_copy.jpg?format=pjpg&auto=webp&fit=crop&quality=76&width=1232" 
+                src="https://cookbook-files.s3.amazonaws.com/default-photo.jpeg" 
                 />
             </Row>
             <Row>
