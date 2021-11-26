@@ -14,7 +14,6 @@ const RegistrationLoginForm = ({headerText}) => {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            console.log(username, password, confirmPassword)
             const successfulLogin = await login({username, password});
             if (successfulLogin) {
                 navigate('/', {state: 'LoggedIn'});
@@ -28,7 +27,6 @@ const RegistrationLoginForm = ({headerText}) => {
     const handleSignup = async (e) => {
         e.preventDefault()
         try {
-            console.log(username, password, confirmPassword)
             const successfullSignup = await signup({username, password, confirmPassword});
             if (successfullSignup) {
                 navigate('/', {state: 'LoggedIn'});
