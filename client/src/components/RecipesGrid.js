@@ -24,7 +24,7 @@ export default function RecipesGrid() {
             {
                 recipes.map((recipe, index) => {
                     return (
-                        <Col className="my-3" xs={4}>
+                        <Col key={`recipe-${index}`} className="my-3" xs={12} md={4}>
                             <RecipeCard 
                             recipeId={recipe._id}
                             title={recipe.title} 

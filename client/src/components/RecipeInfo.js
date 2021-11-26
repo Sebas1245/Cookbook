@@ -25,12 +25,14 @@ export default function RecipeInfo({title, imageSrc, ingredients, steps}) {
                     {ingredients.map((ingredient, i) => <ListGroup.Item key={`ingredient-${i}`}>{ingredient}</ListGroup.Item>)}
                     </ListGroup>
                 </Col>
-                <Col className="text-center">
+                <Col xs={12} md={6} className="text-center">
+                    <Row>
                     <Image
-                    style={{height: '65vh'}} 
+                    style={{height: '65vh', objectFit: 'contain'}} 
                     id="recipe-image" 
                     src={imageSrc} 
                     />
+                    </Row>
                 </Col>
             <Row>
                 <Col>
